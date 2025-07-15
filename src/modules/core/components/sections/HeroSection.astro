@@ -1,0 +1,113 @@
+---
+import { ArrowRight } from "lucide-react";
+import { Button } from "../ui/button";
+import HeroCategoryCard from "../HeroCategoryCard.astro";
+---
+
+<section
+  class="relative min-h-screen flex items-center overflow-hidden bg-primary/80"
+>
+  <div class="absolute inset-0 blur-xs">
+    <img
+      src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1920"
+      alt="Fitness background"
+      class="w-full h-full object-cover"
+    />
+  </div>
+  <div class="absolute inset-0 bg-black/80"></div>
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <div class="space-y-8">
+        <article class="space-y-4">
+          <h1 class="text-5xl lg:text-7xl font-bold text-white leading-tight">
+            Transforma
+            <span class="text-primary">Tu Cuerpo</span>
+          </h1>
+          <p class="text-white text-xl">
+            Descubre nuestra colección premium de equipos de fitness, ropa
+            deportiva y suplementos para alcanzar tus objetivos.
+          </p>
+        </article>
+
+        <div class="flex flex-col sm:flex-row gap-4">
+          <Button className="font-bold">
+            <span>Explorar Productos</span>
+            <ArrowRight
+              className="h-5 w-5 group-hover:translate-x-1 transition-transform"
+            />
+          </Button>
+          <a href="/shop/on-offer">
+            <Button
+              variant="outline"
+              className="bg-transparent font-semibold text-white"
+            >
+              Ver Ofertas
+            </Button>
+          </a>
+        </div>
+
+        <article class="flex space-x-12">
+          <div>
+            <span class="text-3xl font-bold text-white">1000+</span>
+            <p class="text-gray-400">Productos</p>
+          </div>
+          <div>
+            <span class="text-3xl font-bold text-white">50k+</span>
+            <p class="text-gray-400">Clientes</p>
+          </div>
+          <div>
+            <span class="text-3xl font-bold text-white">4.9</span>
+            <p class="text-gray-400">Calificación</p>
+          </div>
+        </article>
+      </div>
+
+      <article class="relative">
+        <div class="grid grid-cols-2 gap-4">
+          <div class="space-y-4">
+            <HeroCategoryCard>
+              <img
+                src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400"
+                alt="Equipos de gym"
+                class="w-full h-32 object-cover rounded-lg mb-4"
+              />
+              <h3 class="text-white font-semibold">Equipos de Gym</h3>
+              <p class="text-muted text-sm">Desde $50000</p>
+            </HeroCategoryCard>
+
+            <HeroCategoryCard>
+              <img
+                src="https://images.unsplash.com/photo-1506629905136-b5f9e99c9655?w=400"
+                alt="Ropa deportiva"
+                class="w-full h-32 object-cover rounded-lg mb-4"
+              />
+              <h3 class="text-white font-semibold">Ropa Deportiva</h3>
+              <p class="text-muted text-sm">Desde $60000</p>
+            </HeroCategoryCard>
+          </div>
+          <div class="space-y-4 pt-8">
+            <HeroCategoryCard href="/shop/supplements">
+              <img
+                src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400"
+                alt="Suplementos"
+                class="w-full h-32 object-cover rounded-lg mb-4"
+              />
+              <h3 class="text-white font-semibold">Suplementos</h3>
+              <p class="text-muted text-sm">Desde $60000</p>
+            </HeroCategoryCard>
+            <HeroCategoryCard>
+              <img
+                src="https://images.unsplash.com/photo-1434596922112-19c563067271?w=400"
+                alt="Accesorios"
+                class="w-full h-32 object-cover rounded-lg mb-4"
+              />
+              <h3 class="text-white font-semibold">Accesorios</h3>
+              <p class="text-muted text-sm">Desde $20000</p>
+            </HeroCategoryCard>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>

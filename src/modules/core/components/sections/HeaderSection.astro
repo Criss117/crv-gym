@@ -1,0 +1,45 @@
+---
+import HeaderSectionUi from "./header-section.ui";
+import supplementsApi from "@lib/supplements.api";
+import implementsApi from "@lib/implements.api";
+import HeaderNavMenu from "./header-nav-menu.ui";
+
+const href = Astro.url.pathname === "/" ? "#" : "/";
+const supplementCategories = await supplementsApi.getSupplementCategories();
+const implementsCategories = await implementsApi.getImplementCategories();
+---
+
+<header class="bg-background shadow-lg w-full top-0 z-40 h-26 fixed">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
+    <div class="flex items-center justify-between h-full">
+      <div class="flex items-center space-x-4 w-3/12">
+        <h1
+          class="text-2xl font-bold bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent cursor-pointer"
+        >
+          <a href={href}>CR-GYM</a>
+        </h1>
+      </div>
+
+      <div class="w-1/2 space-y-2">
+        <HeaderSectionUi.SearchBar />
+        <HeaderNavMenu.Root
+          client:only
+          supplementCategories={supplementCategories}
+          implementsCategories={implementsCategories}
+        >
+          <HeaderNavMenu.Root
+            slot="fallback"
+            supplementCategories={supplementCategories}
+            implementsCategories={implementsCategories}
+          />
+        </HeaderNavMenu.Root>
+      </div>
+
+      <div class="flex items-center gap-x-4 w-3/12 justify-end">
+        <HeaderSectionUi.Cart client:only>
+          <HeaderSectionUi.CartSkeleton slot="fallback" />
+        </HeaderSectionUi.Cart>
+      </div>
+    </div>
+  </div>
+</header>

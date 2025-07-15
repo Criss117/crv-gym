@@ -1,0 +1,17 @@
+---
+import { Card } from "./ui/card";
+
+interface Props {
+  href?: string;
+}
+
+const { href } = Astro.props;
+---
+
+<Card
+  className="bg-gradient-to-tl from-card-foreground to-popover-foreground border-none hover:scale-105 transition-transform duration-300 cursor-pointer"
+>
+  <a href={href ?? "#"} class="px-4">
+    <slot />
+  </a>
+</Card>

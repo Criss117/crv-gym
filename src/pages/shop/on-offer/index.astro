@@ -1,0 +1,39 @@
+---
+import supplementsApi from "@/modules/core/lib/supplements.api";
+import implementsApi from "@/modules/core/lib/implements.api";
+import NavBreadCrumb from "@/modules/core/components/nav-bread-crumb.ui";
+import ShopLayout from "@/modules/core/layouts/ShopLayout.astro";
+import ProductCard from "@/modules/core/components/ProductCard.astro";
+
+const supplementsOnOffer = await supplementsApi.getOnOfferSupplements();
+const implementsOnOffer = await implementsApi.getOnOfferImplements();
+---
+
+<ShopLayout title="Productos en oferta">
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <NavBreadCrumb.Root>
+      <NavBreadCrumb.Home />
+      <NavBreadCrumb.Shop />
+      <NavBreadCrumb.Page label="Productos en oferta" />
+    </NavBreadCrumb.Root>
+    <header class="my-10">
+      <h2 class="text-5xl font-bold">Productos en oferta</h2>
+    </header>
+    <section>
+      <ul
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+      >
+        {
+          supplementsOnOffer.map((supplement) => (
+            <ProductCard product={supplement} />
+          ))
+        }
+        {
+          implementsOnOffer.map((supplement) => (
+            <ProductCard product={supplement} />
+          ))
+        }
+      </ul>
+    </section>
+  </main>
+</ShopLayout>

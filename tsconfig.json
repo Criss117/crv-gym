@@ -1,5 +1,21 @@
 {
-  "extends": "astro/tsconfigs/strict",
-  "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist"]
+	"extends": "astro/tsconfigs/strict",
+	"include": [".astro/types.d.ts", "**/*"],
+	"exclude": ["dist"],
+	"compilerOptions": {
+		"baseUrl": ".",
+		"paths": {
+			"@/*": ["./src/*"],
+			"@core/*": ["./src/modules/core/*"],
+			"@components/*": ["./src/modules/core/components/*"],
+			"@lib/*": ["./src/modules/core/lib/*"],
+			"@layouts/*": ["./src/modules/core/layouts/*"],
+			"@hooks/*": ["./src/modules/core/hooks/*"],
+			"@styles/*": ["./src/styles/*"]
+		},
+		"jsx": "react-jsx",
+		"jsxImportSource": "react",
+		"strictNullChecks": true, // add if using `base` template
+		"allowJs": true // required, and included with all Astro templates
+	}
 }

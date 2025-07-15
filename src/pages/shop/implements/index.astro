@@ -1,0 +1,55 @@
+---
+import { Button } from "@/modules/core/components/ui/button";
+import NavBreadCrumb from "@/modules/core/components/nav-bread-crumb.ui";
+import ShopLayout from "@/modules/core/layouts/ShopLayout.astro";
+import ProductCard from "@/modules/core/components/ProductCard.astro";
+import implementsApi from "@/modules/core/lib/implements.api";
+
+const implementsData = await implementsApi.getImplements();
+
+const firstsImplements = implementsData.slice(0, 8);
+
+const lastImplements = implementsData.slice(8, implementsData.length);
+---
+
+<ShopLayout title="Implements">
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <NavBreadCrumb.Root>
+      <NavBreadCrumb.Home />
+      <NavBreadCrumb.Shop />
+      <NavBreadCrumb.Page label="Implementos" />
+    </NavBreadCrumb.Root>
+    <header class="my-10">
+      <h2 class="text-5xl font-bold">Implementos</h2>
+    </header>
+    <section>
+      <ul
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+      >
+        {firstsImplements.map((p) => <ProductCard product={p} />)}
+      </ul>
+      <div
+        class="bg-pexels-backgorund h-52 rounded-xl my-20 flex items-center justify-between px-5"
+      >
+        <div class="z-10">
+          <h3 class="text-5xl font-bold text-white">Implementos</h3>
+          <p class="text-white">Somos el aliado que necesita tu cuerpo!</p>
+        </div>
+        <a href="/shop/supplements" class="z-10">
+          <Button
+            variant="outline"
+            className="bg-transparent border-white border-2 text-white font-black backdrop-blur-2xl"
+          >
+            Ver más
+          </Button>
+        </a>
+      </div>
+
+      <ul
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+      >
+        {lastImplements.map((p) => <ProductCard product={p} />)}
+      </ul>
+    </section>
+  </main>
+</ShopLayout>

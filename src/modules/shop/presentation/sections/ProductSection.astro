@@ -1,0 +1,105 @@
+---
+import { Image } from "astro:assets";
+import StarsRating from "@/modules/core/components/StarsRating.astro";
+import { Badge } from "@/modules/core/components/ui/badge";
+import { formatCurrency } from "@/modules/core/lib/utils";
+import AddToCart from "@/modules/shop/presentation/components/add-to-cart.ui";
+import { Separator } from "@/modules/core/components/ui/separator";
+import type { ProductSummary } from "@/content/schemas";
+
+interface Props {
+  product: ProductSummary;
+}
+
+const { product } = Astro.props;
+
+const badgeUrl = `/shop/${product.type === "implement" ? "implements" : "supplements"}/categories/${product.categorySlug}`;
+---
+
+<section class="space-y-8">
+  <article class="grid md:grid-cols-2 gap-x-10 gap-y-2 md:gap-y-0">
+    <div class="shadow-sm rounded-xl">
+      <Image
+        src={product.image}
+        alt={product.name}
+        width={1200}
+        height={1200}
+        class="mx-auto aspect-square"
+        transition:name={`${product.slug}-image`}
+      />
+    </div>
+    <div class="space-y-5">
+      <header class="space-y-1">
+        <div>
+          <Badge className="rounded-full font-semibold">
+            <a href={badgeUrl}>
+              {product.category}
+            </a>
+          </Badge>
+          {
+            product.onOffer && (
+              <Badge className="rounded-full font-semibold" variant="secondary">
+                -{product.discountPercentage}% OFF
+              </Badge>
+            )
+          }
+        </div>
+        <h2 class="text-4xl font-bold">{product.name}</h2>
+        <div class="flex gap-x-2 items-center">
+          <StarsRating rating={product.rating} size={18} />
+          <span class="text-md font-semibold">{product.rating.toFixed(1)}</span>
+        </div>
+      </header>
+
+      <div>
+        <div>
+          <span
+            class:list={[
+              product.onOffer
+                ? "text-muted-foreground text-xl line-through"
+                : "font-semibold text-2xl",
+            ]}>{formatCurrency(product.price)}</span
+          >
+          {
+            product.onOffer && product.offerPrice && (
+              <span class="font-semibold text-2xl">
+                {formatCurrency(product.offerPrice)}
+              </span>
+            )
+          }
+        </div>
+        {
+          product.stock > 0 ? (
+            <span class="text-green-600 font-medium">✓ En stock</span>
+          ) : (
+            <span class="text-red-600 font-medium">Agotado</span>
+          )
+        }
+      </div>
+
+      <article class="space-y-2">
+        <h4 class="text-xl font-semibold text-muted-foreground">Descripción</h4>
+        <div class="space-y-1">
+          {product.description.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+      </article>
+
+      <div class="mt-20">
+        <AddToCart.AddButton item={product} client:only>
+          <AddToCart.AddButtonSkeleton slot="fallback" />
+        </AddToCart.AddButton>
+      </div>
+    </div>
+  </article>
+  <article class="">
+    <Separator />
+    <h3 class="text-xl font-semibold text-muted-foreground">Descripción</h3>
+    <div>
+      {
+        product.longDescription.map((paragraph) => (
+          <p class="my-[1lh] text-muted-foreground">{paragraph}</p>
+        ))
+      }
+    </div>
+  </article>
+</section>

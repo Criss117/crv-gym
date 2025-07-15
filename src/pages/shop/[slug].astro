@@ -1,0 +1,50 @@
+---
+import type { GetStaticPaths } from "astro";
+
+import supplementsApi from "@/modules/core/lib/supplements.api";
+import implementsApi from "@/modules/core/lib/implements.api";
+import NavBreadCrumb from "@components/nav-bread-crumb.ui";
+import ShopLayout from "@/modules/core/layouts/ShopLayout.astro";
+import ProductSection from "@/modules/shop/presentation/sections/ProductSection.astro";
+import SameCategoriesProductsSection from "@/modules/shop/presentation/sections/SameCategoriesProductsSection.astro";
+
+export const getStaticPaths = (async () => {
+  const supplements = await supplementsApi.getSupplements();
+  const implementsData = await implementsApi.getImplements();
+
+  return [...supplements, ...implementsData].map((product) => ({
+    params: { slug: product.slug },
+    props: { product },
+  }));
+}) satisfies GetStaticPaths;
+
+const { product } = Astro.props;
+
+const sameCategorySupplements = await supplementsApi.getSupplementsByCategory(
+  product.category,
+  {
+    omitForSlug: [product.slug],
+  },
+);
+---
+
+<ShopLayout title={product.name}>
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-5">
+    <NavBreadCrumb.Root>
+      <NavBreadCrumb.Home />
+      <NavBreadCrumb.Shop />
+      {product.type === "supplement" && <NavBreadCrumb.Supplements />}
+      {product.type === "implement" && <NavBreadCrumb.Implements />}
+      <NavBreadCrumb.Page label={product.name} />
+    </NavBreadCrumb.Root>
+
+    <div class="space-y-20">
+      <ProductSection product={product} />
+
+      <SameCategoriesProductsSection
+        data={sameCategorySupplements}
+        type={product.type}
+      />
+    </div>
+  </main>
+</ShopLayout>

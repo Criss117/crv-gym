@@ -1,0 +1,41 @@
+---
+import type { GetStaticPaths } from "astro";
+import NavBreadCrumb from "@/modules/core/components/nav-bread-crumb.ui";
+import implementsApi from "@/modules/core/lib/implements.api";
+import ShopLayout from "@/modules/core/layouts/ShopLayout.astro";
+import ProductCard from "@/modules/core/components/ProductCard.astro";
+
+export const getStaticPaths = (async () => {
+  const categories = await implementsApi.getImplementCategories();
+
+  return categories.map((c) => ({
+    params: { category: c.slug },
+    props: { categorySlug: c.slug, categoryName: c.name },
+  }));
+}) satisfies GetStaticPaths;
+
+const { categoryName } = Astro.props;
+
+const products = await implementsApi.getImplementsByCategory(categoryName);
+---
+
+<ShopLayout title={categoryName}>
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <NavBreadCrumb.Root>
+      <NavBreadCrumb.Home />
+      <NavBreadCrumb.Shop />
+      <NavBreadCrumb.Implements />
+      <NavBreadCrumb.Page label={`Categoría - ${categoryName}`} />
+    </NavBreadCrumb.Root>
+    <header class="my-10">
+      <h2 class="text-5xl font-bold">Categoría - {categoryName}</h2>
+    </header>
+    <section>
+      <ul
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+      >
+        {products.map((p) => <ProductCard product={p} />)}
+      </ul>
+    </section>
+  </main>
+</ShopLayout>

@@ -1,0 +1,22 @@
+---
+import type { ProductSummary } from "@/content/schemas";
+import ProductCard from "@/modules/core/components/ProductCard.astro";
+
+interface Props {
+  data: ProductSummary[];
+  type: "supplement" | "implement";
+}
+
+const { data, type } = Astro.props;
+---
+
+<section class="space-y-10">
+  <h2 class="text-2xl font-bold">
+    {type === "supplement" ? "Suplementos similares" : "Implementos similares"}
+  </h2>
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+  >
+    {data.map((product) => <ProductCard product={product} />)}
+  </div>
+</section>

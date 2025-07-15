@@ -1,0 +1,21 @@
+---
+import { Star } from "lucide-react";
+interface Props {
+  rating: number;
+  size?: number;
+}
+
+const { rating, size = 16 } = Astro.props;
+
+const stars = Math.ceil(Number.parseFloat(rating.toFixed(1)));
+const noFillStars = 5 - stars;
+---
+
+<div class="flex">
+  {
+    Array.from({ length: stars }).map(() => (
+      <Star size={size} className="text-yellow-500 fill-current" />
+    ))
+  }
+  {Array.from({ length: noFillStars }).map(() => <Star size={size} />)}
+</div>

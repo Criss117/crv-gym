@@ -1,0 +1,91 @@
+---
+import { Image } from "astro:assets";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@components/ui/card";
+import { Badge } from "@components/ui/badge";
+import { formatCurrency } from "@lib/utils";
+import { Button } from "@components/ui/button";
+import StarsRating from "@/modules/core/components/StarsRating.astro";
+import type { ProductSummary } from "@/content/schemas";
+
+interface Props {
+  product: ProductSummary;
+}
+
+const { product } = Astro.props;
+---
+
+<a href={`/shop/${product.slug}`}>
+  <Card className="group cursor-pointer h-full">
+    <div class="space-y-2">
+      <div
+        class:list={[
+          "flex",
+          product.onOffer ? "justify-between" : "justify-end",
+        ]}
+      >
+        {
+          product.onOffer && (
+            <Badge
+              className="rounded-full font-semibold mx-2"
+              variant="secondary"
+            >
+              -{product.discountPercentage}%
+            </Badge>
+          )
+        }
+        <Badge
+          className="rounded-full font-semibold mx-2 right-0"
+          variant="outline"
+        >
+          {product.category}
+        </Badge>
+      </div>
+      <div class="overflow-hidden">
+        <Image
+          src={product.image}
+          alt={product.name}
+          width={300}
+          height={300}
+          class="group-hover:scale-110 transition-transform duration-500 aspect-square overflow-hidden mx-auto"
+          transition:name={`${product.slug}-image`}
+        />
+      </div>
+    </div>
+    <CardHeader>
+      <CardTitle className="group-hover:underline">{product.name}</CardTitle>
+      <CardDescription>{product.category}</CardDescription>
+    </CardHeader>
+    <CardContent className="flex-1">
+      <div class="flex items-center gap-x-2">
+        <StarsRating rating={product.rating} />
+        <span>{product.rating.toFixed(1)}</span>
+      </div>
+      <div>
+        <span
+          class:list={[
+            product.onOffer
+              ? "text-muted-foreground text-sm line-through"
+              : "font-semibold",
+          ]}>{formatCurrency(product.price)}</span
+        >
+        {
+          product.onOffer && product.offerPrice && (
+            <span class="font-semibold">
+              {formatCurrency(product.offerPrice)}
+            </span>
+          )
+        }
+      </div>
+    </CardContent>
+    <CardFooter>
+      <Button className="w-full">Ver detalles</Button>
+    </CardFooter>
+  </Card>
+</a>
