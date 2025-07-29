@@ -6,7 +6,7 @@ import {
 	NavigationMenuLink,
 	NavigationMenuList,
 	NavigationMenuTrigger,
-} from "../ui/navigation-menu";
+} from "@/modules/core/components/ui/navigation-menu";
 
 interface CategoriesProps {
 	values: ProductCategory[];
@@ -82,7 +82,7 @@ function SupplementCategories({ values }: CategoriesProps) {
 								className="from-muted/50 to-muted flex h-full w-full flex-col justify-end rounded-md bg-linear-to-b p-6 no-underline outline-hidden select-none focus:shadow-md"
 								href="/shop/supplements"
 							>
-								<div className="mt-4 mb-2 text-lg font-semibold">CR-SHOP</div>
+								<div className="mt-4 mb-2 text-lg font-semibold">CR-GYM</div>
 								<p className="text-muted-foreground text-sm leading-tight">
 									Ver todos los suplementos.
 								</p>
@@ -118,7 +118,7 @@ function ImplementsCategories({ values }: CategoriesProps) {
 								className="from-muted/50 to-muted flex h-full w-full flex-col justify-end rounded-md bg-linear-to-b p-6 no-underline outline-hidden select-none focus:shadow-md"
 								href="/shop/implements"
 							>
-								<div className="mt-4 mb-2 text-lg font-semibold">CR-SHOP</div>
+								<div className="mt-4 mb-2 text-lg font-semibold">CR-GYM</div>
 								<p className="text-muted-foreground text-sm leading-tight">
 									Ver todos los implementos.
 								</p>

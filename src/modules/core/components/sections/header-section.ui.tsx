@@ -58,7 +58,6 @@ function Cart() {
 			<SheetTrigger asChild>
 				<Button
 					variant="outline"
-					size="sm"
 					className="relative hover:bg-orange-50 hover:border-orange-300 transition-colors"
 				>
 					<ShoppingCart className="h-4 w-4" />

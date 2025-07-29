@@ -20,12 +20,24 @@ export const getStaticPaths = (async () => {
 
 const { product } = Astro.props;
 
-const sameCategorySupplements = await supplementsApi.getSupplementsByCategory(
+const sameCategorySupplementsPromise = supplementsApi.getSupplementsByCategory(
   product.category,
   {
     omitForSlug: [product.slug],
   },
 );
+
+const sameCategoryImplementsPromise = implementsApi.getImplementsByCategory(
+  product.category,
+  {
+    omitForSlug: [product.slug],
+  },
+);
+
+const sameCategoryProducts =
+  product.type === "supplement"
+    ? await sameCategorySupplementsPromise
+    : await sameCategoryImplementsPromise;
 ---
 
 <ShopLayout title={product.name}>
@@ -42,7 +54,7 @@ const sameCategorySupplements = await supplementsApi.getSupplementsByCategory(
       <ProductSection product={product} />
 
       <SameCategoriesProductsSection
-        data={sameCategorySupplements}
+        data={sameCategoryProducts}
         type={product.type}
       />
     </div>
